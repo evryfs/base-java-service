@@ -9,7 +9,11 @@ if [ -n "$GOSU_CHOWN" ]; then
   do
     chown -R $GOSU_USER $DIR
   done
-fi  
+fi
+
+if (( `id -u` == 0 )); then
+  chown -R app:app /app || true
+fi
 
 # If GOSU_USER environment variable set to something other than 0:0 (root:root),
 # become user:group set within and exec command passed in args
@@ -17,12 +21,7 @@ if [ -n "$GOSU_USER" ] && [ "$GOSU_USER" != "0:0" ]; then
   IFS=':' read -r -a uidgid <<< $GOSU_USER
   groupmod -o -g "${uidgid[1]}" app || true
   usermod -u "${uidgid[0]}" -g "${uidgid[1]}" app
-  #not needed since we run herokuish instead:
-  #exec gosu $GOSU_USER "$@"
-fi
-
-if (( `id -u` == 0 )); then 
-  chown -R app:app /app
+  exec gosu $GOSU_USER "$@"
 fi
 
 # If GOSU_USER was 0:0 exec command passed in args without gosu (assume already root)
