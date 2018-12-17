@@ -2,6 +2,9 @@
 
 set -e
 
+#remove any stale socket file so that restarts do not fail
+rm ${OVERMIND_SOCKET} || true
+
 # If GOSU_CHOWN environment variable set, recursively chown all specified directories 
 # to match the user:group set in GOSU_USER environment variable.
 if [ -n "$GOSU_CHOWN" ]; then
