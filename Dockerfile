@@ -7,7 +7,7 @@ RUN apt update && \
     apt clean && \
     curl --silent -L https://github.com/DarthSim/overmind/releases/download/${OVERMIND_VERSION}/overmind-${OVERMIND_VERSION}-linux-amd64.gz | zcat > /usr/local/bin/overmind && \
     chmod a+x /usr/local/bin/overmind && \
-    useradd -c "application user" -d /app -s /bin/bash -m app -u 99 && \
+    useradd -c "application user" -d /app -s /bin/bash -m app -u 99 --system && \
     find /var/cache/ -type f -delete
 COPY entrypoint.sh /
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
