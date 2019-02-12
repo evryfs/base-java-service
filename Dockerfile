@@ -1,6 +1,6 @@
 FROM evryfs/docker-java:java11
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
-ARG OVERMIND_VERSION=v1.2.1
+ARG OVERMIND_VERSION=v2.0.0
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
 RUN apt update && \
     apt -y install daemontools git gosu tmux && \
