@@ -1,4 +1,4 @@
-FROM evryfs/docker-java:java11
+FROM evryfs/docker-java:java12
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ARG OVERMIND_VERSION=v2.0.1
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
