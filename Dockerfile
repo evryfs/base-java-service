@@ -2,6 +2,7 @@ FROM quay.io/evryfs/base-java:java8
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ARG OVERMIND_VERSION=v2.0.3
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt update && \
     apt -y install daemontools git gosu tmux && \
     apt clean && \
