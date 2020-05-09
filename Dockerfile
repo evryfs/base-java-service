@@ -11,4 +11,5 @@ RUN apt-get update && \
     useradd -c "application user" -d /app -s /bin/bash -m app -u 99 --system && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY entrypoint.sh /
+WORKDIR /app
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
