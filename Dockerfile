@@ -2,6 +2,7 @@ FROM quay.io/evryfs/base-java:java14-20200425
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ARG OVERMIND_VERSION=v2.1.1
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
+ENV DEFAULT_JAVA_OPTIONS="-Djava.net.preferIPv4Stack=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Xlog:gc*:file=logs/gc.log::filecount=6,filesize=10M -XX:+HeapDumpOnOutOfMemoryError -XX:InitialRAMPercentage=50.0 -XX:MinRAMPercentage=50.0 -XX:MaxRAMPercentage=75.0 -server -XshowSettings:vm -XX:HeapDumpPath=/tmp"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
     apt-get -y --no-install-recommends install daemontools gosu tmux && \
