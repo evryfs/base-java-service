@@ -1,4 +1,5 @@
 FROM quay.io/evryfs/base-java:java11-20210305
+LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ARG OVERMIND_VERSION=v2.2.2
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
 ENV DEFAULT_JAVA_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError -XX:InitialRAMPercentage=50.0 -XX:MinRAMPercentage=50.0 -XX:MaxRAMPercentage=75.0 -server -XshowSettings:vm -XX:HeapDumpPath=/tmp"
