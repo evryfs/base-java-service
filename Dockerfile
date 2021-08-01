@@ -1,4 +1,4 @@
-FROM quay.io/evryfs/base-java:java11-20210727
+FROM quay.io/evryfs/base-java:java11-20210801
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ARG OVERMIND_VERSION=v2.2.2
 ENV OVERMIND_SOCKET=/tmp/.overmind.sock
