@@ -1,4 +1,4 @@
-FROM quay.io/evryfs/base-java:java15-20210825
+FROM quay.io/evryfs/base-java:java15-20210831
 LABEL maintainer "David J. M. Karlsen <david@davidkarlsen.com>"
 ENV DEFAULT_JAVA_OPTIONS="-XX:+HeapDumpOnOutOfMemoryError -XX:InitialRAMPercentage=50.0 -XX:MinRAMPercentage=50.0 -XX:MaxRAMPercentage=75.0 -server -XshowSettings:vm -XX:HeapDumpPath=/tmp"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
