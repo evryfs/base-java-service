@@ -31,9 +31,5 @@ if [ -n "$OTEL_ENABLED" ]; then
   export DEFAULT_JAVA_OPTIONS="$DEFAULT_JAVA_OPTIONS $OTEL_JAVA_OPTS"
 fi
 
-if [ -n "$OTEL_ENABLED" ]; then
-  export DEFAULT_JAVA_OPTIONS="$DEFAULT_JAVA_OPTIONS $OTEL_JAVA_OPTS"
-fi
-
 # If GOSU_USER was 0:0 exec command passed in args without gosu (assume already root)
 exec "$@"
