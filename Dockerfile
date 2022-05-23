@@ -7,9 +7,7 @@ RUN apt-get update && \
     apt-get clean && \
     useradd -c "application user" -d /app -s /bin/bash -m app -u 99 --system && \
     chmod o+rx /app && \
-    rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    mkdir /opentelemetry && curl -Lfs "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar" --output /opentelemetry/opentelemetry-javaagent.jar
-ENV OTEL_JAVA_OPTS="-javaagent:/opentelemetry/opentelemetry-javaagent.jar"
+    rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY entrypoint.sh /
 WORKDIR /app
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
