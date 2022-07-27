@@ -7,6 +7,9 @@ on:
     tags:
     - '*'
   pull_request:
+permissions:
+  id-token: write
+  contents: read
 jobs:
   build:
     permissions:
@@ -54,5 +57,6 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       env:
         COSIGN_EXPERIMENTAL: 1
-      #run: cosign sign --oidc-issuer ${env.ACTIONS_ID_TOKEN_REQUEST_URL} ${{ env.IMAGE }}
-      run: cosign sign --oidc-issuer ${ACTIONS_ID_TOKEN_REQUEST_URL} ${{ env.IMAGE }}@${{ steps.build-push.outputs.digest }}
+      run: |
+        cosign sign --oidc-issuer ${ACTIONS_ID_TOKEN_REQUEST_URL} ${{ env.IMAGE }}@${{ steps.build-push.outputs.digest }}
+        cosign verify ${{ steps.build-push.outputs.digest }}
