@@ -9,6 +9,9 @@ on:
   pull_request:
 jobs:
   build:
+    permissions:
+      id-token: write
+      contents: read
     env:
       IMAGE: quay.io/evryfs/base-java-service
     runs-on: ubuntu-latest
