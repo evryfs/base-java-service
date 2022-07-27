@@ -9,6 +9,11 @@ on:
   pull_request:
 jobs:
   build:
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      IMAGE: quay.io/evryfs/base-java-service
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -18,28 +23,47 @@ jobs:
       uses: ludeeus/action-shellcheck@1.1.0
     - name: Docker meta
       id: meta
-      uses: docker/metadata-action@v3
+      uses: docker/metadata-action@v4
       with:
         # list of Docker images to use as base name for tags
         images: |
-          quay.io/evryfs/base-java-service
+          ${{ env.IMAGE }}
         # generate Docker tags based on the following events/attributes
         tags: |
           type=ref,event=tag
           type=ref,event=branch
           type=ref,event=pr
           type=sha
+    - name: Docker meta
+      id: metasha
+      uses: docker/metadata-action@v4
+      with:
+        # list of Docker images to use as base name for tags
+        images: |
+          ${{ env.IMAGE }}
+        # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
     - name: Login to quay.io
       if: github.event_name != 'pull_request'
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
         registry: quay.io
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
     - name: Build and push
-      uses: docker/build-push-action@v2
+      id: build-push
+      uses: docker/build-push-action@v3
       with:
         context: .
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+    - uses: sigstore/cosign-installer@v2.5.0
+    - name: cosign
+      if: ${{ github.event_name != 'pull_request' }}
+      env:
+        COSIGN_EXPERIMENTAL: 1
+      run: |
+        cosign sign --oidc-issuer https://token.actions.githubusercontent.com ${{ steps.metasha.outputs.tags }}
+        cosign verify ${{ steps.metasha.outputs.tags }}
